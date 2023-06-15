@@ -1,0 +1,18 @@
+services:
+  database:
+    image: postgres:15.1-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: demoapp
+      POSTGRES_PASSWORD: demoapp
+      POSTGRES_DB: demoapp
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
